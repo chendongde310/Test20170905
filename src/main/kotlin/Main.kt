@@ -80,14 +80,14 @@ fun main(args: Array<String>) {
 
 
 
-
+//计算在33个数字中随机选取6个 每个数字出现的概率，然后*(1/36)／RPAll
 
     for (data in datas){
         var RPAll : Double = 1.00
         for (rb in data.rbs){
             RPAll *= RPbai.get(rb)!!
         }
-//        RPAll = RPAll*(1/36)
+//        RPAll = RPAll
 
     }
 
