@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * 作者：陈东  —  www.renwey.com
  * 日期：2017/9/5 - 上午10:50
@@ -6,32 +8,52 @@
 public class JavaMain {
 
 
-    public void combine(int[] a, int n) {
+    public static void main(String args[]){
 
-        if(null == a || a.length == 0 || n <= 0 || n > a.length)
-            return;
+//        findCombination(33, 50, new int[33]);
 
-        int[] b = new int[n];//辅助空间，保存待输出组合数
-        getCombination(a, n , 0, b, 0);
+        int n,m;
+        Scanner s=new Scanner(System.in);
+        n=s.nextInt();
+        m=s.nextInt();
+        length=n;
+        int[] flag=new int[n];
+        findCombination(n, m, flag);
     }
 
-    private void getCombination(int[] a, int n, int begin, int[] b, int index) {
+  int[] num = new int[6];
+    public static  void  go(int r1,int r2,int r3,int r4,int r5,int r6){
 
-        if(n == 0){//如果够n个数了，输出b数组
-            for(int i = 0; i < index; i++){
-                System.out.print(b[i] + " ");
+    }
+
+
+
+
+
+    static int length;
+    static void findCombination(int n,int m,int flagI[]){
+        if (n<1||m<1) {
+            return;
+        }
+        if (n>m) {
+            n=m;
+        }
+        if (n==m) {
+            flagI[n-1]=1;
+            for (int i = 0; i < length; i++) {
+                if (flagI[i]==1) {
+                    System.out.print(i+1+" ");
+                }
             }
             System.out.println();
-            return;
+            flagI[n-1]=0;
         }
 
-        for(int i = begin; i < a.length; i++){
+        flagI[n-1]=1;
+        findCombination(n-1, m-n, flagI);
 
-            b[index] = a[i];
-            getCombination(a, n-1, i+1, b, index+1);
-        }
-
+        flagI[n-1]=0;
+        findCombination(n-1, m, flagI);
     }
-
 
 }

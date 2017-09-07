@@ -58,43 +58,87 @@ fun main(args: Array<String>) {
     }
 
 
-
-    val maxRB  = datas.size*6
-    val maxBB  = datas.size
+    val maxRB = datas.size * 6
+    val maxBB = datas.size
     val RPbai = HashMap<Int, Double>()
     val BPbai = HashMap<Int, Double>()
-    for (index in RP.values.indices){
-        val i = index+1
-        val  values  = RP.get(i)
-        RPbai.put(i, values!!.toDouble()/maxRB.toDouble())
+    for (index in RP.values.indices) {
+        val i = index + 1
+        val values = RP.get(i)
+        RPbai.put(i, values!!.toDouble() / maxRB.toDouble())
     }
 
-    for (index in BP.values.indices){
-        val i = index+1
-        val  values  = BP.get(i)
-        BPbai.put(i, values!!.toDouble()/maxBB.toDouble())
+    for (index in BP.values.indices) {
+        val i = index + 1
+        val values = BP.get(i)
+        BPbai.put(i, values!!.toDouble() / maxBB.toDouble())
     }
 
+    println(RPbai)
 
+    var RPLast: Double = 0.00
 
-
-
-
-//计算在33个数字中随机选取6个 每个数字出现的概率，然后*(1/36)／RPAll
-
-    for (data in datas){
-        var RPAll : Double = 1.00
-        for (rb in data.rbs){
-            RPAll *= RPbai.get(rb)!!
+    var upNum = 0
+    var downNum = 0
+    var baseP = 0.00
+    for (data in datas) {
+        var RPNext: Double = 1.00
+        for (rb in data.rbs) {
+            RPNext *= RPbai.get(rb)!!
         }
-//        RPAll = RPAll
-
+        RPNext = (1f / 1107568f) / RPNext
+        if (RPLast != 0.00) {
+            if (RPNext >= RPLast) {
+//                println("上升" + (RPNext - RPLast))
+                baseP += (RPNext - RPLast)
+                upNum++
+            } else {
+//                println("下降" + (RPLast - RPNext))
+                baseP -= (RPLast - RPNext)
+                downNum++
+            }
+        }
+        RPLast = RPNext
+        println(RPNext)
     }
 
 
+    println("上升次数" + upNum)
+    println("下降次数" + downNum)
+    println(baseP)
 
+
+    val FWMIN = RPLast - (baseP * (downNum.toDouble() / (upNum + downNum)))
+    val FWMAX = RPLast + (baseP * (upNum.toDouble() / (upNum + downNum)))
+    println("取值概率范围：" + FWMIN + "到" + FWMAX)
+
+
+    //背包问题
+
+    var num = ArrayList<Int>()
+    num.add(6)
+    num.add(17)
+    num.add(19)
+    num.add(23)
+    num.add(25)
+    num.add(32)
+    var fnum = 1.00
+
+    for (n in num) {
+        fnum *= RPbai.get(n)!!
+    }
+
+    println("你的号码范围"+(1f / 1107568f) /fnum)
 
 }
+
+
+fun go(r1: Int, r2: Int, r3: Int, r4: Int, r5: Int, r6: Int) {
+
+}
+
+
+
 
 
 
