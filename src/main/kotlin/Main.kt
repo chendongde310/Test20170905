@@ -9,8 +9,27 @@ import kotlin.collections.ArrayList
  * 注释：
  *
  */
+
+
+val RPbai = HashMap<Int, Double>()
+val BPbai = HashMap<Int, Double>()
+
+
 fun main(args: Array<String>) {
 
+
+    go(6, 7, 8, 10, 12, 14)
+    go(3,7,14,25,26,27)
+    go(5,9,14,17,24,26)
+    go(3,4,6,12,13,26)
+    go(12,13,23,27,31,33)
+
+}
+
+
+fun go(r1: Int, r2: Int, r3: Int, r4: Int, r5: Int, r6: Int) {
+    RPbai.clear()
+    BPbai.clear()
 //创建SAXReader读取器，专门用于读取xml
     val saxReader = SAXReader()
     //根据saxReader的read重写方法可知，既可以通过inputStream输入流来读取，也可以通过file对象来读取
@@ -60,8 +79,7 @@ fun main(args: Array<String>) {
 
     val maxRB = datas.size * 6
     val maxBB = datas.size
-    val RPbai = HashMap<Int, Double>()
-    val BPbai = HashMap<Int, Double>()
+
     for (index in RP.values.indices) {
         val i = index + 1
         val values = RP.get(i)
@@ -110,31 +128,20 @@ fun main(args: Array<String>) {
 
     val FWMIN = RPLast - (baseP * (downNum.toDouble() / (upNum + downNum)))
     val FWMAX = RPLast + (baseP * (upNum.toDouble() / (upNum + downNum)))
-    println("取值概率范围：" + FWMIN + "到" + FWMAX)
-
-
-    //背包问题
-
-    var num = ArrayList<Int>()
-    num.add(6)
-    num.add(17)
-    num.add(19)
-    num.add(23)
-    num.add(25)
-    num.add(32)
+    println("中奖取值概率范围：" + FWMIN + "到" + FWMAX)
+    val num = ArrayList<Int>()
+    num.add(r1)
+    num.add(r2)
+    num.add(r3)
+    num.add(r4)
+    num.add(r5)
+    num.add(r6)
     var fnum = 1.00
-
     for (n in num) {
         fnum *= RPbai.get(n)!!
     }
-
-    println("你的号码范围"+(1f / 1107568f) /fnum)
-
-}
-
-
-fun go(r1: Int, r2: Int, r3: Int, r4: Int, r5: Int, r6: Int) {
-
+    fnum = (1f / 1107568f) / fnum
+    println("你的号码范围" + fnum)
 }
 
 
